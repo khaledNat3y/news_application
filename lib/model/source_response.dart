@@ -11,10 +11,14 @@ String sourceResponseToJson(SourceResponse data) => json.encode(data.toJson());
 class SourceResponse {
   String? _status;
   List<Source>? _sources;
+  String? code;
+  String? message;
 
   SourceResponse({
     String? status,
     List<Source>? sources,
+    this.code,
+    this.message,
   }) {
     _status = status;
     _sources = sources;
@@ -22,6 +26,8 @@ class SourceResponse {
 
   SourceResponse.fromJson(dynamic json) {
     _status = json['status'];
+    code = json["code"];
+    message = json["message"];
     if (json['sources'] != null) {
       _sources = [];
       json['sources'].forEach((v) {
@@ -46,6 +52,8 @@ class SourceResponse {
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['status'] = _status;
+    map['code'] = code;
+    map['message'] = message;
     if (_sources != null) {
       map['sources'] = _sources?.map((v) => v.toJson()).toList();
     }
@@ -101,25 +109,6 @@ class Source {
   String? _category;
   String? _language;
   String? _country;
-
-  Source copyWith({
-    String? id,
-    String? name,
-    String? description,
-    String? url,
-    String? category,
-    String? language,
-    String? country,
-  }) =>
-      Source(
-        id: id ?? _id,
-        name: name ?? _name,
-        description: description ?? _description,
-        url: url ?? _url,
-        category: category ?? _category,
-        language: language ?? _language,
-        country: country ?? _country,
-      );
 
   String? get id => _id;
 
