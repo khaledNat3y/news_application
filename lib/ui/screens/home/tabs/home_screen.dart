@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_application/model/category.dart';
 import 'package:news_application/ui/screens/home/tabs/categories/categories_tab.dart';
-import 'package:news_application/ui/screens/home/tabs/news/tabs_list.dart';
+import 'package:news_application/ui/screens/home/tabs/news/tabs_list/tabs_list.dart';
 import 'package:news_application/ui/screens/home/tabs/settings/settings.dart';
 import 'package:news_application/utils/app_theme.dart';
 
@@ -37,15 +37,22 @@ class _HomeState extends State<Home> {
             return false;
           }
         },
-        child: Scaffold(
-          drawer: buildDrawer(),
-            appBar: AppBar(
-              toolbarHeight: MediaQuery.sizeOf(context).height * 0.1,
-              title: Text("News App",
-                style: AppTheme.titleStyle.copyWith(color: AppColors.white),),
-              centerTitle: true,
+        child: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/pattern.png"),
             ),
-            body: body,
+          ),
+          child: Scaffold(
+            drawer: buildDrawer(),
+              appBar: AppBar(
+                toolbarHeight: MediaQuery.sizeOf(context).height * 0.1,
+                title: Text("News App",
+                  style: AppTheme.titleStyle.copyWith(color: AppColors.white),),
+                centerTitle: true,
+              ),
+              body: body,
+          ),
         ),
       ),
     );

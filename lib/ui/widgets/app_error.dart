@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 
 class ErrorView extends StatelessWidget {
   final String error;
-
-  const ErrorView({super.key, required this.error,});
-
+  final Function? onRefreshClick;
+  const ErrorView({super.key, required this.error, this.onRefreshClick});
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(error),
         ElevatedButton(
-            onPressed: (){},
+            onPressed: (){
+              onRefreshClick?.call();
+            },
             child: Text("Refresh")),
       ],
     );

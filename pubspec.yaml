@@ -33,7 +33,11 @@ dependencies:
   cupertino_icons: ^1.0.2
   http: ^1.2.0
   cached_network_image: ^3.3.1
-
+  flutter_regex: ^0.0.3
+  provider: ^6.1.2
+  internet_connection_checker: ^1.0.0+1
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.14.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
