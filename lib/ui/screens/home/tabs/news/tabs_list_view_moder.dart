@@ -1,37 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_application/data/repos/news_repo/news_repo.dart';
-// import 'package:news_application/data/news_repo/data_sources/remote_data_sources/news_remote_data_sources.dart';
 import 'package:news_application/model/source_response.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../../data/repos/news_repo/data_sources/local_data_source/news_local_data_source.dart';
-import '../../../../../data/repos/news_repo/data_sources/remote_data_source/news_remote_data_sources.dart';
-import '../../../../../data/repos/news_repo/news_repo_impl.dart';
-class TabsListViewModel extends ChangeNotifier {
-  TabsListState state = TabsListState.loading;
-  List<Source> sources = [];
-  String errorMessage = '';
+class TabsListViewModel extends Cubit<TabsListState> {
   NewsRepo repo;
-  TabsListViewModel(this.repo);
+  TabsListViewModel(this.repo):super(TabsListState());
   Future<void> loadTabsList(String categoryId) async{
     ///show loading
-    state = TabsListState.loading;
-    notifyListeners();
+    // state = ApiState.loading;
+    // notifyListeners();
+    emit(TabsListState(listApiState: ApiState.loading));
     try {
       SourceResponse sourcesResponse = await repo.loadTabsList(categoryId);
       ///show tabs list
-      state = TabsListState.success;
-      sources = sourcesResponse.sources!;
-      notifyListeners();
+      emit(TabsListState(listApiState: ApiState.success,
+          sources: sourcesResponse.sources!));
+
     }catch(exception) {
-      state = TabsListState.error;
-      errorMessage = exception.toString();
-      notifyListeners();
+
+      emit(TabsListState(listApiState: ApiState.error ,
+          errorMessage: exception.toString()));
     }
   }
 }
-enum TabsListState {
+class TabsListState {
+  List<Source> sources = [];
+  String errorMessage = '';
+  ApiState listApiState;
+  TabsListState({this.listApiState = ApiState.loading,
+    this.sources = const [] ,
+    this.errorMessage = ""});
+}
+enum ApiState {
   success,
   loading,
   error,

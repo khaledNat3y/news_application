@@ -38,6 +38,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   firebase_core: ^2.24.2
   cloud_firestore: ^4.14.0
+  flutter_bloc: ^8.1.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

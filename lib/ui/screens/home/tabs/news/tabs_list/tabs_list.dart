@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:news_application/data/repos/news_repo/data_sources/local_data_source/news_local_data_source.dart';
@@ -45,27 +46,23 @@ class _TabsListState extends State<TabsList> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => viewModel,
-      child: Builder(
-        builder: (context) {
-          viewModel = Provider.of(
-            context,
+    return BlocBuilder<TabsListViewModel,TabsListState>(
+      bloc: viewModel,
+      builder: (context, state) {
+        viewModel = BlocProvider.of(context);
+        if (state.listApiState == ApiState.loading) {
+          return AppLoader();
+        } else if (state == ApiState.success) {
+          return tabsList(state.sources);
+        } else {
+          return ErrorView(
+            error: state.errorMessage,
+            onRefreshClick: () {
+              viewModel.loadTabsList(widget.categoryId);
+            },
           );
-          if (viewModel.state == TabsListState.loading) {
-            return AppLoader();
-          } else if (viewModel.state == TabsListState.success) {
-            return tabsList(viewModel.sources);
-          } else {
-            return ErrorView(
-              error: viewModel.errorMessage,
-              onRefreshClick: () {
-                viewModel.loadTabsList(widget.categoryId);
-              },
-            );
-          }
-        },
-      ),
+        }
+      },
     );
   }
 
