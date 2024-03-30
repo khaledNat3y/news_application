@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 import 'package:news_application/model/article_response.dart';
 import '../../../../../data/repos/news_repo/news_repo.dart';
-
+@injectable
 class TabDetailsViewModel extends ChangeNotifier {
   TabDetailsState state = TabDetailsState.loading;
   List<Article> articles = [];

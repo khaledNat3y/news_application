@@ -8,13 +8,14 @@ import 'package:news_application/data/repos/news_repo/news_repo_impl.dart';
 
 // import 'package:news_application/data/news_repo/data_sources/remote_data_sources/news_remote_data_sources.dart';
 import 'package:news_application/ui/screens/home/tabs/news/tab_details/tab_details.dart';
-import 'package:news_application/ui/screens/home/tabs/news/tabs_list_view_moder.dart';
+import 'package:news_application/ui/screens/home/tabs/news/tabs_list_view_model.dart';
 import 'package:news_application/utils/app_colors.dart';
 import 'package:news_application/utils/app_theme.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../../data/repos/news_repo/data_sources/local_data_source/news_loacal_data_source_impl.dart';
 import '../../../../../../data/repos/news_repo/data_sources/remote_data_source/news_remote_data_source_impl.dart';
+import '../../../../../../di.dart';
 import '../../../../../../model/source_response.dart';
 import '../../../../../widgets/app_error.dart';
 import '../../../../../widgets/app_loader.dart';
@@ -30,13 +31,7 @@ class TabsList extends StatefulWidget {
 
 class _TabsListState extends State<TabsList> {
   int currentTabIndex = 0;
-  TabsListViewModel viewModel = TabsListViewModel(
-      NewsRepoImpl(
-        NewsRemoteDataSourceImpl(),
-        NewsLocalDataSourceImpl(),
-        InternetConnectionChecker(),
-
-      ));
+  TabsListViewModel viewModel = getIt();
 
   @override
   void initState() {
@@ -49,10 +44,10 @@ class _TabsListState extends State<TabsList> {
     return BlocBuilder<TabsListViewModel,TabsListState>(
       bloc: viewModel,
       builder: (context, state) {
-        viewModel = BlocProvider.of(context);
+        //viewModel = BlocProvider.of(context);
         if (state.listApiState == ApiState.loading) {
           return AppLoader();
-        } else if (state == ApiState.success) {
+        } else if (state.listApiState == ApiState.success) {
           return tabsList(state.sources);
         } else {
           return ErrorView(

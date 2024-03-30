@@ -18,41 +18,46 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   late Widget body;
-   bool canPop= false;
+  bool canPop = false;
+
   @override
   void initState() {
     body = CategoriesTab(onCategoryClick: onCategoryClick);
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: WillPopScope(
-        onWillPop: ()async{
-          if(body is CategoriesTab) {
+        onWillPop: () async {
+          if (body is CategoriesTab) {
             return true;
-          }else {
+          } else {
             setState(() {
               body = CategoriesTab(onCategoryClick: onCategoryClick);
             });
             return false;
           }
         },
-        child: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/pattern.png"),
+        child: Scaffold(
+          drawer: buildDrawer(),
+          appBar: AppBar(
+            toolbarHeight: MediaQuery.sizeOf(context).height * 0.1,
+            title: Text(
+              "News App",
+              style: AppTheme.titleStyle.copyWith(color: AppColors.white),
             ),
+            centerTitle: true,
           ),
-          child: Scaffold(
-            drawer: buildDrawer(),
-              appBar: AppBar(
-                toolbarHeight: MediaQuery.sizeOf(context).height * 0.1,
-                title: Text("News App",
-                  style: AppTheme.titleStyle.copyWith(color: AppColors.white),),
-                centerTitle: true,
+          body: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(
+                      "assets/pattern.png",
+                    ),
+                    fit: BoxFit.cover),
               ),
-              body: body,
-          ),
+              child: body),
         ),
       ),
     );
@@ -65,19 +70,21 @@ class _HomeState extends State<Home> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            color: AppColors.primaryColor,
+              color: AppColors.primaryColor,
               padding: EdgeInsets.all(32),
-              child: Text("News App",
-                style: AppTheme.sideBarTextStyle.copyWith(color: AppColors.white),
-                textAlign: TextAlign.center,)
-          ),
-          buildDarwerListItem(Icons.list, "Categories", (){
+              child: Text(
+                "News App",
+                style:
+                    AppTheme.sideBarTextStyle.copyWith(color: AppColors.white),
+                textAlign: TextAlign.center,
+              )),
+          buildDarwerListItem(Icons.list, "Categories", () {
             setState(() {
               body = CategoriesTab(onCategoryClick: onCategoryClick);
               Navigator.pop(context);
             });
           }),
-          buildDarwerListItem(Icons.settings,"Settings", (){
+          buildDarwerListItem(Icons.settings, "Settings", () {
             setState(() {
               body = SettingsTab();
               Navigator.pop(context);
@@ -88,20 +95,29 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget buildDarwerListItem(IconData iconData, String title,Function onClick) {
+  Widget buildDarwerListItem(
+      IconData iconData, String title, Function onClick) {
     return InkWell(
-      onTap: (){
+      onTap: () {
         onClick();
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 8, horizontal: 6),
         child: Row(
-              children: [
-                Icon(iconData,size: 32,),
-                SizedBox(width: 8,),
-                Text(title,style: TextStyle(fontSize: 24),),
-              ],
+          children: [
+            Icon(
+              iconData,
+              size: 32,
             ),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              title,
+              style: TextStyle(fontSize: 24),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -112,4 +128,3 @@ class _HomeState extends State<Home> {
     });
   }
 }
-

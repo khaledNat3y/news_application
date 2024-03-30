@@ -6,8 +6,11 @@ import 'package:news_application/ui/splash/splash_screen.dart';
 import 'package:news_application/utils/app_theme.dart';
 import 'package:news_application/utils/firebase_constants.dart';
 
+import 'di.dart';
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  configureDependencies();
   await Firebase.initializeApp(
     options: const FirebaseOptions(apiKey:  FirebaseConstants.firebaseApikey,
         appId: FirebaseConstants.firebaseProjectId,

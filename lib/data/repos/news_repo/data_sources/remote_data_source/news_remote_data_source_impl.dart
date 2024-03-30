@@ -1,11 +1,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:injectable/injectable.dart';
 import 'package:news_application/data/repos/news_repo/data_sources/remote_data_source/news_remote_data_sources.dart';
 
 import '../../../../../model/article_response.dart';
 import '../../../../../model/source_response.dart';
-
+@Injectable(as: NewsRemoteDataSource)
 class NewsRemoteDataSourceImpl  extends NewsRemoteDataSource{
   static const String defaultErrorMessage = "something went wrong please try again later";
   static const String baseUrl = "https://newsapi.org";

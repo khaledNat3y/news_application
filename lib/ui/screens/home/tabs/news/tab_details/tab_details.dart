@@ -15,7 +15,7 @@ import '../../../../../../data/repos/news_repo/data_sources/local_data_source/ne
 import '../../../../../../data/repos/news_repo/data_sources/remote_data_source/news_remote_data_source_impl.dart';
 import '../../../../../../data/repos/news_repo/news_repo_impl.dart';
 import '../../../../../../utils/app_colors.dart';
-import '../tabs_list_view_moder.dart';
+import '../tabs_list_view_model.dart';
 
 class TabDetails extends StatefulWidget {
   final String sourceId;

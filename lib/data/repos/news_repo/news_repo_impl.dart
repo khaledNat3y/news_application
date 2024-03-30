@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:news_application/data/repos/news_repo/news_repo.dart';
 
@@ -5,7 +6,7 @@ import '../../../model/article_response.dart';
 import '../../../model/source_response.dart';
 import 'data_sources/local_data_source/news_local_data_source.dart';
 import 'data_sources/remote_data_source/news_remote_data_sources.dart';
-
+@Injectable(as: NewsRepo)
 class NewsRepoImpl extends NewsRepo{
   NewsRemoteDataSource newsRemoteDataSource;
   NewsLocalDataSource newsLocalDataSource;
