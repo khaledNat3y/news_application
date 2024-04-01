@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:news_application/data/repos/news_repo/data_sources/remote_data_source/news_remote_data_source_impl.dart';
+import 'package:news_application/data/repos/news_repo/news_repo.dart';
+import 'package:news_application/data/repos/news_repo/news_repo_impl.dart';
 import 'package:news_application/model/category.dart';
 import 'package:news_application/ui/screens/home/tabs/categories/categories_tab.dart';
 import 'package:news_application/ui/screens/home/tabs/news/tabs_list/tabs_list.dart';
+import 'package:news_application/ui/screens/home/tabs/search/search_screen.dart';
 import 'package:news_application/ui/screens/home/tabs/settings/settings.dart';
 import 'package:news_application/utils/app_theme.dart';
 
@@ -17,6 +21,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  late NewsRepoImpl newsRepoImpl;
   late Widget body;
   bool canPop = false;
 
@@ -48,6 +53,11 @@ class _HomeState extends State<Home> {
               style: AppTheme.titleStyle.copyWith(color: AppColors.white),
             ),
             centerTitle: true,
+            actions: [
+              IconButton(onPressed: () {
+                //todo: change body to search page
+              }, icon: Icon(Icons.search))
+            ],
           ),
           body: Container(
               decoration: const BoxDecoration(
@@ -95,8 +105,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget buildDarwerListItem(
-      IconData iconData, String title, Function onClick) {
+  Widget buildDarwerListItem(IconData iconData, String title, Function onClick) {
     return InkWell(
       onTap: () {
         onClick();
@@ -126,5 +135,8 @@ class _HomeState extends State<Home> {
     setState(() {
       body = TabsList(categoryId: category.backEndId);
     });
+  }
+  void UpadateList(String value) {
+
   }
 }
