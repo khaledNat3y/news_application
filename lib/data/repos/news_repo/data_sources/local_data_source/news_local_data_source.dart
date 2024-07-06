@@ -8,7 +8,7 @@ import '../../../../../utils/firestore_constants.dart';
 abstract class NewsLocalDataSource {
   Future<SourceResponse?> loadTabsList(String categoryId);
 
-  Future<ArticlesResponse> loadArticlesList(String sourceId);
+  Future<ArticlesResponse?> loadArticlesList(String sourceId);
 
   Future<void> saveTabsResponse(String sourceId, SourceResponse response);
 

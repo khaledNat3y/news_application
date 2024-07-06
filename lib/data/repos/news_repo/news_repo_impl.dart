@@ -13,7 +13,7 @@ class NewsRepoImpl extends NewsRepo{
   InternetConnectionChecker connectionsChecker;
   NewsRepoImpl(this.newsRemoteDataSource, this.newsLocalDataSource, this.connectionsChecker);
   Future<SourceResponse> loadTabsList(String categoryId) async {
-    //todo: replace this condition with internet check
+
     if(await connectionsChecker.hasConnection){
       SourceResponse response = await newsRemoteDataSource.loadTabsList(categoryId);
       newsLocalDataSource.saveTabsResponse(categoryId, response);
@@ -31,7 +31,7 @@ class NewsRepoImpl extends NewsRepo{
       return response;
     }else {
       ArticlesResponse? response = await newsLocalDataSource.loadArticlesList(sourceId);
-      return response;
+      return response!;
     }
   }
 }

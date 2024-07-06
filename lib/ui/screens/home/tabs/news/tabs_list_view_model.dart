@@ -9,8 +9,6 @@ class TabsListViewModel extends Cubit<TabsListState> {
   TabsListViewModel(this.repo):super(TabsListState());
   Future<void> loadTabsList(String categoryId) async{
     ///show loading
-    // state = ApiState.loading;
-    // notifyListeners();
     emit(TabsListState(listApiState: ApiState.loading));
     try {
       SourceResponse sourcesResponse = await repo.loadTabsList(categoryId);
